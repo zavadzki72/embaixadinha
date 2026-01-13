@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+        
+    <link rel="stylesheet" href="style.min.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+
+    <title>Embaixadinhas</title>
+</head>
+<body>
+    <div class="loader active">
+        <img class="blink" src="./assets/icons/best-of-site.png" height="120px" alt="">
+            <span>Cantando o hino nacional</span>
+            <span>Aguarde...</span>
+            <br>
+            <p>Caso não carregue tente desabilitar o adblocker =)</p>
+    </div>
+    
+    <audio src="./assets/music/song.mp3#t=00:00:03" id="music" loop></audio>
+    <audio src="./assets/music/ball-effects.mp3" id="ballSound"></audio>
+    
+    <div class="bg-header">
+        <div class="alert-bg">
+            <div id="alert-version" class="alert">
+                <div class="icon__wrapper">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
+                </span>
+                </div>
+                <p>
+                    Uma nova versão foi instalada! <a href="release-notes.html">Veja os detalhes</a>
+                </p>
+                <span class="open">
+                </span>
+                <span id="close-alert-info" class="close" onclick="closeAlertVersion()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="bg">
+            <div class="score-title">0</div>
+            <div class="score">
+                <img src="./assets/icons/medal-best.png" id="bestScoreIcon">
+                <span id="bestScore">0</span>
+                <img src="./assets/icons/actual-score.png">
+                <span id="score">0</span>
+            </div>
+            <div class="ranking-icon">
+                <button onClick="sound()">
+                    <img src="./assets/icons/sound-off.png" id="iconVol">
+                </button>
+                <button onClick="changeModal()" id="modalButton">
+                    <img src="./assets/icons/rank.png">
+                </button>
+                <button onClick="changeModalSettings()" id="settingsBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                    </svg>
+                </button>
+                <a style="color: black;" href="https://github.com/zavadzki72" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal-ranking">
+        <div class="header">
+            <div class="title">
+                <img src="./assets/icons/best-of-site.png" alt="">
+                <h4>Melhores jogadores do site</h4>
+            </div>
+            <button class="close-modal" onClick="changeModal()">
+                <img src="./assets/icons/close-modal.png" alt="">
+            </button>
+        </div>
+        <div class="players-list">
+            <ul id="ranking"></ul>
+        </div>
+        <div class="ranking-info">
+            <a style="color: white;" href="https://marccusz.com" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe-americas" viewBox="0 0 16 16">
+                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484-.08.08-.162.158-.242.234-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z"/>
+                </svg>
+            </a>
+            Top 10 dos melhores jogadores
+            <a style="color: white;" href="https://github.com/zavadzki72" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-register">
+        <div class="header">
+            <div class="title">
+                <img src="./assets/icons/best-of-site.png" alt="">
+                <h4>Informe seu nome</h4>
+            </div>
+            <button class="close-modal" onClick="changeModalRegister()">
+                <img src="./assets/icons/close-modal.png" alt="">
+            </button>
+        </div>
+        <form class="form" action="javascript:void(0);" onsubmit="return registerPlayerSubmit(this)">
+            <div class="form-register">
+                <input class="name-input" type="text" name="name" placeholder="ex: Marccus Zavadzki" autocomplete="off" required />
+            </div>
+            <span class="form-error">Um Jogador com esse nome ja existe, tente outro nome!</span>
+            <div class="form-info">
+                <button class="register-player" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="modal-settings">
+        <div class="header">
+            <div class="title">
+                <img src="./assets/icons/settings.png" alt="">
+                <h4>Configurações</h4>
+            </div>
+            <button class="close-modal" onClick="changeModalSettings()">
+                <img src="./assets/icons/close-modal.png" alt="">
+            </button>
+        </div>
+        <form class="form" action="javascript:void(0);" onsubmit="return settingsSubmit(this)">
+            <div class="form-settings-name">
+                <label class="label-edit-name">Nome</label>
+                <input id="edit-name-input" class="edit-name-input" type="text" name="name" required />
+            </div>
+            <span class="form-error">Um Jogador com esse nome ja existe, tente outro nome!</span>
+            <div class="form-info">
+                <a style="color: white;" href="https://marccusz.com" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe-americas" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484-.08.08-.162.158-.242.234-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z"/>
+                    </svg>
+                </a>
+                <button class="register-player" type="submit">Salvar</button>
+                <a class="tooltip" style="color: white;" href="release-notes.html">
+                    <span class="tooltiptext">Notas de versão</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-code" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z"/>
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                      </svg>
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script src="https://zimjs.org/cdn/1.3.4/createjs.js"></script>
+<script src="https://zimjs.org/cdn/00/zim_min.js"></script>
+<script src="https://zimjs.org/cdn/2.1.3/box2d.js"></script>
+<script src="https://zimjs.org/cdn/physics_2.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script src="index.min.js"></script>
+<!-- <script src="index.js"></script> -->
+
+</html>
