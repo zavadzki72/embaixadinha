@@ -7,7 +7,7 @@ namespace Embaixadinha.API.Configurations
     {
         public static void AddEntityFrameworkConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("MySqlConnection");
+            var connectionString = configuration.GetConnectionString("Postgres");
 
             services.AddDbContext<ApplicationContext>(x => x.UseNpgsql(connectionString));
         }
