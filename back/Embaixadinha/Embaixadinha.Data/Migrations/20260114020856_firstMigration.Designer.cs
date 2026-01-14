@@ -5,58 +5,55 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Embaixadinha.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230131124056_AddUniqueConstraintPlayerIp")]
-    partial class AddUniqueConstraintPlayerIp
+    [Migration("20260114020856_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Embaixadinha.Models.Entities.Player", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created_At")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("PlayerIp")
                         .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("player_ip");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Updated_At")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id")
-                        .HasName("pk_player");
+                    b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("ix_player_name");
+                        .IsUnique();
 
                     b.HasIndex("PlayerIp")
-                        .IsUnique()
-                        .HasDatabaseName("ix_player_player_ip");
+                        .IsUnique();
 
                     b.ToTable("player", (string)null);
                 });
@@ -65,30 +62,25 @@ namespace Embaixadinha.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created_At")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PlayerId")
-                        .HasColumnType("int")
-                        .HasColumnName("player_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Updated_At")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Value")
-                        .HasColumnType("int")
-                        .HasColumnName("value");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id")
-                        .HasName("pk_score");
+                    b.HasKey("Id");
 
-                    b.HasIndex("PlayerId")
-                        .HasDatabaseName("ix_score_player_id");
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("score", (string)null);
                 });
@@ -99,8 +91,7 @@ namespace Embaixadinha.Data.Migrations
                         .WithMany("Scores")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_score_player_player_id");
+                        .IsRequired();
 
                     b.Navigation("Player");
                 });

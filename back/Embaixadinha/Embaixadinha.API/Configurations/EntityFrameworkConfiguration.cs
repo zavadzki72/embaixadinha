@@ -9,9 +9,7 @@ namespace Embaixadinha.API.Configurations
         {
             var connectionString = configuration.GetConnectionString("MySqlConnection");
 
-            services.AddDbContext<ApplicationContext>(options => {
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).UseSnakeCaseNamingConvention();
-            }, ServiceLifetime.Scoped);
+            services.AddDbContext<ApplicationContext>(x => x.UseNpgsql(connectionString));
         }
     }
 }

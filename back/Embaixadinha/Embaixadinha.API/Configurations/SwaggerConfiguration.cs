@@ -6,44 +6,46 @@ namespace Embaixadinha.API.Configurations
     {
         public static void AddSwaggerConfiguration(this IServiceCollection services)
         {
+            services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(s =>
             {
-
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "Embaixadinha API",
                     Description = "API do jogo de embaixadinhas"
                 });
-                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+
+                var securityScheme = new OpenApiSecurityScheme
                 {
-                    In = ParameterLocation.Header,
-                    Description = "Please insert JWT with Bearer into field",
                     Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
-                s.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                 {
-                  new OpenApiSecurityScheme
-                  {
+                    Description = "JWT Authorization header usando o esquema Bearer.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
                     Reference = new OpenApiReference
                     {
-                      Type = ReferenceType.SecurityScheme,
-                      Id = "Bearer"
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
                     }
-                   },
-                   Array.Empty<string>()
-                 }
+                };
+
+                s.AddSecurityDefinition("Bearer", securityScheme);
+
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { securityScheme, new List<string>() }
                 });
             });
         }
 
-        public static void UseSwaggerSetup(this IApplicationBuilder application)
+        public static void UseSwaggerSetup(this IApplicationBuilder app)
         {
-            application.UseSwagger();
-            application.UseSwaggerUI(c =>
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Embaixadinha API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Embaixadinha API v1");
             });
         }
     }
