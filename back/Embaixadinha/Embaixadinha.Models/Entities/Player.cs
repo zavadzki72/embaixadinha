@@ -10,8 +10,8 @@ namespace Embaixadinha.Models.Entities
             Name = name;
             PlayerIp = playerIp;
 
-            Created_At = DateTime.Now;
-            Updated_At = DateTime.Now;
+            Created_At = DateTimeOffset.UtcNow;
+            Updated_At = DateTimeOffset.UtcNow;
         }
 
         public string Name { get; set; }

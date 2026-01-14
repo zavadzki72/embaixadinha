@@ -102,7 +102,7 @@ namespace Embaixadinha.Services
             }
 
             player.Name = updatePlayerViewModel.Name;
-            player.Updated_At = DateTime.Now;
+            player.Updated_At = DateTimeOffset.UtcNow;
 
             _applicationContext.Update(player);
             await _applicationContext.SaveChangesAsync();

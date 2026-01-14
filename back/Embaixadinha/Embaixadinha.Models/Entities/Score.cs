@@ -7,8 +7,8 @@
             Value = value;
             PlayerId = playerId;
 
-            Created_At = DateTime.Now;
-            Updated_At = DateTime.Now;
+            Created_At = DateTimeOffset.UtcNow;
+            Updated_At = DateTimeOffset.UtcNow;
         }
 
         public int Value { get; set; }
